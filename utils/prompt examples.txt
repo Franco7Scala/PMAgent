@@ -1,0 +1,2 @@
+Given this sequence: activity, Assign seriousness, Take in charge ticket, Take in charge ticket. how could finish it?
+Given this sequence: activity, Assign seriousness, Take in charge ticket, Take in charge ticket. how could finish it if there isn't the  activity Resolve ticket?
