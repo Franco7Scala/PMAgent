@@ -1,3 +1,5 @@
+import re
+
 from src.loaders import file_loader, model_loader
 from langchain_classic.chains import RetrievalQA
 from langchain_classic.prompts import PromptTemplate
@@ -31,4 +33,7 @@ class PMAgent:
 
     def ask(self, query):
         result = self.retrieval_qa.invoke({"query": query})
-        return result['result']
+        answer = result['result']
+        retrieved_context = re.search(r"Context:(.*?)Question:", answer, re.DOTALL).group(1).strip()
+        answer = re.search(r"Helpful & Analytical Answer:(.*)", answer, re.DOTALL).group(1).strip()
+        return retrieved_context, answer

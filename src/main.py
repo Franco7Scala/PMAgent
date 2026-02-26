@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 from src.pm_agent import PMAgent
-from src.utils import get_prompt_template
+from src.utils import get_prompt_template, cprint, Color
 
 
 if __name__ == "__main__":
@@ -11,7 +11,7 @@ if __name__ == "__main__":
     chunk_overlap = 50
 
     reasoner_model_name = "mistralai/Mistral-7B-v0.1"
-    max_new_tokens=300
+    max_new_tokens=1000
     temperature=0.7
     do_sample=True
     top_p=0.95
@@ -39,5 +39,6 @@ if __name__ == "__main__":
         if query.lower() == 'exit':
             break
 
-        answer = pm_agent.ask(query)
-        print(f"Answer: {answer}\n")
+        context, answer = pm_agent.ask(query)
+        cprint(f"Context:\n{context}\n", Color.EXPERIMENT_CONFIG_INFO)
+        cprint(f"Answer:\n{answer}\n", Color.EXPERIMENT_OUTPUT)
