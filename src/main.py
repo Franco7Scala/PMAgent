@@ -1,7 +1,6 @@
 from types import SimpleNamespace
 from src.pm_agent import PMAgent
-from src.utils import get_prompt_template, cprint, Color
-
+from src.utils import get_prompt_template, cprint, Color, count_tokens
 
 if __name__ == "__main__":
     file_paths = ["/home/jovyan/projects/PMAgent/datasets/helpdesk.csv"]
@@ -10,13 +9,13 @@ if __name__ == "__main__":
     chunk_size = 700
     chunk_overlap = 50
 
-    reasoner_model_name = "mistralai/Mistral-7B-v0.1"
-    max_new_tokens=1000
+    reasoner_model_name = "google/gemma-3-4b-it"
+    max_new_tokens=10000
     temperature=0.7
     do_sample=True
     top_p=0.95
 
-    k_retriever = 3
+    k_retriever = 7
 
     prompt_template = get_prompt_template()
 
@@ -39,6 +38,7 @@ if __name__ == "__main__":
         if query.lower() == 'exit':
             break
 
-        context, answer = pm_agent.ask(query)
+        cprint(f"Tokens per question: {count_tokens(query, reasoner_model_name)}\n", Color.EXPERIMENT_OUTPUT)
+        context, answer, full_answer = pm_agent.ask(query)
         cprint(f"Context:\n{context}\n", Color.EXPERIMENT_CONFIG_INFO)
         cprint(f"Answer:\n{answer}\n", Color.EXPERIMENT_OUTPUT)

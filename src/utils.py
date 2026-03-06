@@ -1,6 +1,6 @@
 import torch
-import numpy
 
+from transformers import AutoTokenizer
 from enum import Enum
 
 
@@ -43,6 +43,10 @@ def get_device():
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
+def count_tokens(text, model_name):
+    return len(AutoTokenizer.from_pretrained(model_name).encode(text))
+
+
 def get_prompt_template():
     return """
         You are a Senior Process Mining Analyst and Data Scientist. Your goal is to analyze event logs, process models, transition probabilities, and performance metrics provided in the context to answer complex questions about process execution.
@@ -56,8 +60,10 @@ def get_prompt_template():
         3. What-If Analysis: When performing "what-if" scenarios, compare the hypothetical scenario against the baseline metrics provided in the context (such as current throughput times or bottleneck stages). Clearly explain the expected impact on time, cost, or case completion.
         4. Case Status & Estimation: When asked about the current stage of a task or if it will reach completion, identify its current state based on the logs, trace its most likely next steps (predictive path), highlight any deviations from the "happy path", and estimate the remaining time to completion.
         5. Structure & Clarity: Keep your answer highly analytical, objective, and well-structured. Use bullet points for clarity if explaining multiple metrics or a sequence of predicted events.
-        
+        6. Format the code in json format were there are keys like "answer", "probability", "what_if_analysis", "case_status", "estimation", etc. depending on the question asked.
+
         Context:
+        
         {context}
         
         Question: {question}
