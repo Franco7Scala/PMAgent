@@ -36,10 +36,7 @@ class PMAgent:
 
     def ask(self, query):
         result = self.retrieval_qa.invoke({"query": query})
-        answer = result['result']
-        retrieved_context = re.search(r"Context:(.*?)Question:", answer, re.DOTALL).group(1).strip()
-        only_answer = re.search(r"Helpful & Analytical Answer:(.*)", answer, re.DOTALL).group(1).strip()
-        return retrieved_context, only_answer, answer
+        return [doc.page_content for doc in result["source_documents"]], result["result"]
 
     def _preprocess_files(self, file_paths):
         output_file = "../datasets/temp_combined_log.txt"
