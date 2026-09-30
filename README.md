@@ -1,5 +1,6 @@
 # Beyond Dashboards: PMAgent for RAG-Driven Natural Language Process Mining
 
+[![Paper](https://img.shields.io/badge/Paper-ECML_PKDD-brightgreen.svg)](TODO)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This repository contains the code and resources for the **PMAgent** framework presented in the research paper "Beyond Dashboards: PMAgent for RAG-Driven Natural Language Process Mining". Our proposal addresses the accessibility barrier in Process Mining (PM) by integrating Large Language Models (LLMs) with Retrieval-Augmented Generation (RAG). This integration enables users to execute advanced analytical tasks, such as predictive monitoring and what-if analysis, entirely through natural language. 
